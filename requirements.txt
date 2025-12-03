@@ -1,0 +1,4 @@
+openai
+langchain
+llama-parse
+python-dotenv
