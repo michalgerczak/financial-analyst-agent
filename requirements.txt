@@ -2,3 +2,9 @@ openai
 langchain
 llama-parse
 python-dotenv
+pypdf
+pdfplumber
+pymupdf4llm
+anthropic
+pdf2image
+pymupdf-layout
