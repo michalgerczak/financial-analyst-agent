@@ -4,13 +4,13 @@ import pdfplumber
 import pymupdf4llm
 
 FILE_PATH = "data/report.pdf"
-PAGE_INDEX = 62  # The Balance Sheet page (Page in the pdf file = 63)
+PAGE_INDEX = 79  # The Balance Sheet page (Page in the pdf file = 63)
 
 print(f"BENCHMARKING LOCAL PDF EXTRACTION (Page {PAGE_INDEX})")
 print("="*60)
 
 # --- MODEL 1: pypdf (The Stream) ---
-print(f"RUNNING: pypdf...")
+print(f"1. RUNNING: pypdf...")
 start_time = time.time()
 reader = PdfReader(FILE_PATH)
 page = reader.pages[PAGE_INDEX]
@@ -22,7 +22,7 @@ print(f"PREVIEW: {text_pypdf[:100].replace(chr(10), ' ')}...")
 print("-" * 20)
 
 # --- MODEL 2: pdfplumber (The Detective) ---
-print(f"2️⃣RUNNING: pdfplumber...")
+print(f"2. RUNNING: pdfplumber...")
 start_time = time.time()
 with pdfplumber.open(FILE_PATH) as pdf:
     page = pdf.pages[PAGE_INDEX]
@@ -40,15 +40,14 @@ print("-" * 20)
 # --- MODEL 3: pymupdf4llm (The Local Hero) ---
 print(f"RUNNING: pymupdf4llm (Markdown Converter)...")
 start_time = time.time()
-# This tool converts the layout to Markdown
 md_text = pymupdf4llm.to_markdown(FILE_PATH, pages=[PAGE_INDEX])
 end_time = time.time()
 
 print(f"TIME: {end_time - start_time:.4f} seconds")
 if "|" in md_text:
-    print(f"   ✅ Table Structure Detected: Markdown pipes '|' found!")
+    print(f"Table Structure Detected: Markdown pipes '|' found!")
 else:
-    print(f"   ❌ Table Structure Detected: None")
+    print(f"Table Structure Detected: None")
 
 print("="*60)
 print("🔎 PREVIEW OF MODEL 3 (pymupdf4llm):")
